@@ -2,7 +2,7 @@
 
 # Mezcla los comandos =httppie=, =jq= y =csvkit= para descargar las peliculas de *Star Wars* y guardar los campos de =title,episode_id,director,producer,release_date,opening_crawl= en una base de datos =sqlite= llamada =star_wars.db=
 
-http http://swapi.co/api/films/ | jq ‘[.results[] | {title,episode_id,director,producer,release_date,opening_crawl}]’ | in2csv -f json | csvsql --db sqlite:///star_wars.db --table peliculas --insert
+http http://swapi.co/api/films/ | jq '[.results[] | {title,episode_id,director,producer,release_date,opening_crawl}]' | in2csv -f json | csvsql --db sqlite:///star_wars.db --table peliculas --insert
 
 
 
@@ -11,5 +11,5 @@ http http://swapi.co/api/films/ | jq ‘[.results[] | {title,episode_id,director
 #NOTA: Solo existen 6 resources en SWAPI, no 7
 for res in $(http http://swapi.co/api/ | jq -r 'keys[]')
 do
-	http GET http://swapi.co/api/$res/ | jq '[.results[]]' | in2csv -f json | csvsql --db sqlite:///stars_wars.db --table $res --insert
+	http GET http://swapi.co/api/$res/ | jq '[.results[]]' | in2csv -f json | csvsql --db sqlite:///star_wars.db --table $res --insert
 done
